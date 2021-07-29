@@ -28,8 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image.asset('assets/images/logo.png',
-                    height: 150.0, width: 150),
+                Image.asset('assets/images/me.jpg', height: 150.0, width: 150),
                 const Text('Intelligent Innovations',
                     style: TextStyle(
                       color: Colors.black,

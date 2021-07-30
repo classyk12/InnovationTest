@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intelligent_innovation/controllers/home-controller.dart';
 import 'package:intelligent_innovation/models/users.dart';
@@ -76,7 +77,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(' Error',
+                Text(_homeController.error.value,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 InkWell(
@@ -86,8 +87,10 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       Icon(Icons.refresh, color: Colors.blue[900]),
                       Text(' try again',
-                          style:
-                              TextStyle(fontSize: 20, color: Colors.blue[900])),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.blue[900],
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                 )

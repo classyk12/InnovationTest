@@ -11,16 +11,17 @@ class DetailController extends GetxController {
   var detail = new UserDetailModel().obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getUserDetail();
+    Future.delayed(Duration(seconds: 2), () => getUserDetail());
   }
 
   Future getUserDetail() async {
     try {
-      var response = await _userService.getUserById(detail.value.id!);
-      progress.value = LoadingEnum.done;
+      var response = await _userService.getUserById(detail.value!.id!);
+
       if (response != null) {
+        progress.value = LoadingEnum.done;
         detail.value = response;
       } else {
         progress.value = LoadingEnum.failed;

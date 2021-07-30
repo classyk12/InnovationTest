@@ -16,6 +16,14 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       offset: json['offset'] as int?,
     );
 
+// Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
+//       'data': instance.data,
+//       'total': instance.total,
+//       'page': instance.page,
+//       'limit': instance.limit,
+//       'offset': instance.offset,
+//     };
+
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       id: json['id'] as String?,
       title: json['title'] as String?,
@@ -24,6 +32,15 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
       email: json['email'] as String?,
       picture: json['picture'] as String?,
     );
+
+// Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
+//       'id': instance.id,
+//       'title': instance.title,
+//       'firstName': instance.firstName,
+//       'lastName': instance.lastName,
+//       'email': instance.email,
+//       'picture': instance.picture,
+//     };
 
 UserDetailModel _$UserDetailModelFromJson(Map<String, dynamic> json) =>
     UserDetailModel(
@@ -49,6 +66,22 @@ UserDetailModel _$UserDetailModelFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updatedAt'] as String),
     );
 
+// Map<String, dynamic> _$UserDetailModelToJson(UserDetailModel instance) =>
+//     <String, dynamic>{
+//       'id': instance.id,
+//       'title': instance.title,
+//       'firstName': instance.firstName,
+//       'lastName': instance.lastName,
+//       'gender': instance.gender,
+//       'email': instance.email,
+//       'dateOfBirth': instance.dateOfBirth?.toIso8601String(),
+//       'phone': instance.phone,
+//       'picture': instance.picture,
+//       'location': instance.location,
+//       'registerDate': instance.registerDate?.toIso8601String(),
+//       'updatedAt': instance.updatedAt?.toIso8601String(),
+//     };
+
 Location _$LocationFromJson(Map<String, dynamic> json) => Location(
       street: json['street'] as String?,
       city: json['city'] as String?,
@@ -56,3 +89,11 @@ Location _$LocationFromJson(Map<String, dynamic> json) => Location(
       country: json['country'] as String?,
       timezone: json['timezone'] as String?,
     );
+
+// Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+//       'street': instance.street,
+//       'city': instance.city,
+//       'state': instance.state,
+//       'country': instance.country,
+//       'timezone': instance.timezone,
+//     };

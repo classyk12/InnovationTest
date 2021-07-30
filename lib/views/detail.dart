@@ -15,7 +15,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(model);
+    _detailController.detail.value.id = model?.id;
     return Scaffold(
         backgroundColor: Colors.grey[50],
         body: NestedScrollView(
@@ -45,30 +45,17 @@ class DetailScreen extends StatelessWidget {
           body: Obx(() => ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  _detailController.progress.value == LoadingEnum.failed
-                      ? Text('failed to load')
-                      : infoCard(
-                          'Gender', _detailController.detail.value!.gender!),
+                  infoCard('Gender', _detailController.detail.value!.gender!),
                   infoCard('Mobile', model!.email!),
-                  _detailController.progress.value == LoadingEnum.failed
-                      ? Text('failed to load')
-                      : infoCard(
-                          'Date of Birth',
-                          _detailController.detail.value!.dateOfBirth!
-                              .toString()),
-                  _detailController.progress.value == LoadingEnum.failed
-                      ? Text('failed to load')
-                      : infoCard(
-                          'Date Joined',
-                          _detailController.detail.value!.registerDate!
-                              .toString()),
+                  infoCard('Date of Birth',
+                      _detailController.detail.value!.dateOfBirth!.toString()),
+                  infoCard('Date Joined',
+                      _detailController.detail.value!.registerDate!.toString()),
                   infoCard('Email', model!.email!),
-                  _detailController.progress.value == LoadingEnum.failed
-                      ? Text('failed to load')
-                      : infoCard(
-                          'Address',
-                          formatLocation(
-                              _detailController.detail.value!.location!)),
+                  infoCard(
+                      'Address',
+                      formatLocation(
+                          _detailController.detail.value!.location!)),
                 ],
               )),
         ));
@@ -88,11 +75,13 @@ class DetailScreen extends StatelessWidget {
         ),
         _detailController.progress.value == LoadingEnum.loading
             ? CircularProgressIndicator(color: black)
-            : Text(subtitle,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                    fontSize: 15)),
+            : _detailController.progress.value == LoadingEnum.done
+                ? Text(subtitle,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey,
+                        fontSize: 15))
+                : Text('failed to load'),
         SizedBox(height: 5),
         Divider(color: Colors.grey)
       ]),

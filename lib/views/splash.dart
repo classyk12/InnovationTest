@@ -15,29 +15,24 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () async {
+    Future.delayed(const Duration(seconds: 5), () async {
       Get.offNamed('/home');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.white,
-        child: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Image.asset('assets/images/me.jpg', height: 150.0, width: 150),
-                const Text('Intelligent Innovations',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      decoration: TextDecoration.none,
-                    ))
-              ]),
-        ));
+    return Center(
+        child: Container(
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+      child: const Text('I - I',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
+            decoration: TextDecoration.none,
+          )),
+    ));
   }
 
   @override

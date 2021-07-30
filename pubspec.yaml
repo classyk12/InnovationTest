@@ -18,11 +18,10 @@ dev_dependencies:
 
 
   get: 3.21.2 #handle states, routes and other utilities
-  shimmer: ^1.1.2 #fancy library to use as loading placeholder
-  dio: #helps with the api http calls
-  json_serializable: ^3.5.1 #model creation and factory method generation
-  build_runner: ^1.10.11 #compliments the above package
-  shared_preferences: ^0.5.7+3 # offline work and caching
+  json_serializable:  #model creation and factory method generation
+  build_runner: ^2.0.6 #compliments the above package
+  api_cache_manager: ^1.0.1 #caching
+
 
 
 flutter:

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import 'package:intelligent_innovation/views/detail.dart';
 import 'package:intelligent_innovation/views/home.dart';
 import 'package:intelligent_innovation/views/splash.dart';
 
@@ -28,8 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(fontFamily: 'Poppins'),
         getPages: [
           GetPage(name: '/splash', page: () => const SplashScreen()),
-          GetPage(name: '/home', page: () => const HomeScreen()),
-          GetPage(name: '/details', page: () => const DetailScreen()),
+          GetPage(name: '/home', page: () => HomeScreen())
         ]);
   }
 }

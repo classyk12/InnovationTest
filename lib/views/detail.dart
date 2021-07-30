@@ -1,12 +1,21 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
+import 'package:intelligent_innovation/controllers/detail-controller.dart';
+import 'package:intelligent_innovation/controllers/home-controller.dart';
+import 'package:intelligent_innovation/models/users.dart';
+import 'package:get/get.dart';
+import 'package:intelligent_innovation/utils/utils.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  final UserDetailModel? model;
+
+  DetailScreen({Key? key, this.model}) : super(key: key);
+  final DetailController _detailController = Get.put(DetailController());
 
   @override
   Widget build(BuildContext context) {
+    print(model);
     return Scaffold(
         backgroundColor: Colors.grey[50],
         body: NestedScrollView(
@@ -19,32 +28,49 @@ class DetailScreen extends StatelessWidget {
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
-                    title: Text("Tony Montana",
+                    title: Text('${model!.firstName!} ${model!.lastName!} ',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16.0,
                         )),
                     background: Container(
-                      child: Image.network(
-                          "https://randomuser.me/api/portraits/med/men/83.jpg",
+                      child: FadeInImage.assetNetwork(
+                          placeholder: 'assets/images/me.jpg',
+                          image: model!.picture!,
                           fit: BoxFit.cover),
                     )),
               ),
             ];
           },
-          body: ListView(
-            padding: EdgeInsets.zero,
-            //crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              infoCard('Gender', "Male"),
-              infoCard('Mobile', "+1-098-0900-909"),
-              infoCard('Date of Birth', "26 July, 2002"),
-              infoCard('Date Joined', "Jun 21 2021"),
-              infoCard('Email', "rudi.droste@example.com"),
-              infoCard('Address',
-                  "Germany, Sachsen-Anhalt, GrÃ¼nhain-Beierfeld 1196, MÃ¼hlenweg"),
-            ],
-          ),
+          body: Obx(() => ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  _detailController.progress.value == LoadingEnum.failed
+                      ? Text('failed to load')
+                      : infoCard(
+                          'Gender', _detailController.detail.value!.gender!),
+                  infoCard('Mobile', model!.email!),
+                  _detailController.progress.value == LoadingEnum.failed
+                      ? Text('failed to load')
+                      : infoCard(
+                          'Date of Birth',
+                          _detailController.detail.value!.dateOfBirth!
+                              .toString()),
+                  _detailController.progress.value == LoadingEnum.failed
+                      ? Text('failed to load')
+                      : infoCard(
+                          'Date Joined',
+                          _detailController.detail.value!.registerDate!
+                              .toString()),
+                  infoCard('Email', model!.email!),
+                  _detailController.progress.value == LoadingEnum.failed
+                      ? Text('failed to load')
+                      : infoCard(
+                          'Address',
+                          formatLocation(
+                              _detailController.detail.value!.location!)),
+                ],
+              )),
         ));
   }
 
@@ -60,9 +86,13 @@ class DetailScreen extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 15)),
         ),
-        Text(subtitle,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 15)),
+        _detailController.progress.value == LoadingEnum.loading
+            ? CircularProgressIndicator(color: black)
+            : Text(subtitle,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
+                    fontSize: 15)),
         SizedBox(height: 5),
         Divider(color: Colors.grey)
       ]),

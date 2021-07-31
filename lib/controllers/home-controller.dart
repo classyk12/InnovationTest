@@ -28,7 +28,7 @@ class HomeController extends GetxController {
       }
     } catch (err) {
       progress.value = LoadingEnum.failed;
-      error.value = 'something went wrong';
+      error.value = err.toString();
       print('err');
     }
   }

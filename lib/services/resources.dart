@@ -12,7 +12,6 @@ class ResourceService extends GetConnect {
     httpClient.addRequestModifier((request) async {
       request.headers.addAll({'app-id': apiKey});
 
-      print(request.url);
       return request;
     });
     super.onInit();

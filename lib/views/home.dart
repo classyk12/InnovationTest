@@ -5,8 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intelligent_innovation/controllers/home-controller.dart';
 import 'package:intelligent_innovation/models/users.dart';
+import 'package:intelligent_innovation/utils/error.dart';
 import 'package:intelligent_innovation/utils/utils.dart';
 import 'package:intelligent_innovation/views/detail.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -48,9 +50,16 @@ class HomeScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(3.0),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
-                              child: FadeInImage.assetNetwork(
-                                  placeholder: 'assets/images/me.jpg',
-                                  image: _homeController.users[index].picture!),
+                              child: CachedNetworkImage(
+                                imageUrl: _homeController.users[index].picture!,
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator.adaptive(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error, color: Colors.red),
+                              ),
+                              // FadeInImage.assetNetwork(
+                              //     placeholder: 'assets/images/me.jpg',
+                              //     image: _homeController.users[index].picture!),
                             ),
                           ),
                         ),
@@ -72,31 +81,8 @@ class HomeScreen extends StatelessWidget {
                   );
                 });
           }
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(_homeController.error.value,
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                InkWell(
-                  onTap: () => _homeController.getData(),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.refresh, color: Colors.blue[900]),
-                      Text(' try again',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.blue[900],
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
+          return HandleError(
+              _homeController.error.value, _homeController.getData);
         }));
   }
 }

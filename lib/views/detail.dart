@@ -5,7 +5,9 @@ import 'package:intelligent_innovation/controllers/detail-controller.dart';
 import 'package:intelligent_innovation/controllers/home-controller.dart';
 import 'package:intelligent_innovation/models/users.dart';
 import 'package:get/get.dart';
+import 'package:intelligent_innovation/utils/error.dart';
 import 'package:intelligent_innovation/utils/utils.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class DetailScreen extends StatelessWidget {
   final UserDetailModel? model;
@@ -34,30 +36,57 @@ class DetailScreen extends StatelessWidget {
                           fontSize: 16.0,
                         )),
                     background: Container(
-                      child: FadeInImage.assetNetwork(
-                          placeholder: 'assets/images/me.jpg',
-                          image: model!.picture!,
-                          fit: BoxFit.cover),
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: model!.picture!,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator.adaptive(),
+                        errorWidget: (context, url, error) => Icon(
+                            Icons.no_photography_outlined,
+                            color: Colors.grey),
+                      ),
+                      // FadeInImage.assetNetwork(
+                      //     placeholder: 'assets/images/me.jpg',
+                      //     image: model!.picture!,
+                      //     fit: BoxFit.cover),
                     )),
               ),
             ];
           },
-          body: Obx(() => ListView(
+          body: Obx(() {
+            if (_detailController.progress.value == LoadingEnum.loading) {
+              return Center(child: CircularProgressIndicator.adaptive());
+            }
+
+            if (_detailController.progress.value == LoadingEnum.done) {
+              return ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  infoCard('Gender', _detailController.detail.value!.gender!),
-                  infoCard('Mobile', model!.email!),
-                  infoCard('Date of Birth',
-                      _detailController.detail.value!.dateOfBirth!.toString()),
-                  infoCard('Date Joined',
-                      _detailController.detail.value!.registerDate!.toString()),
+                  infoCard(
+                      'Gender', _detailController.detail.value?.gender ?? ''),
+                  infoCard(
+                      'Mobile', _detailController.detail.value?.phone ?? ''),
+                  infoCard(
+                      'Date of Birth',
+                      _detailController.detail.value?.dateOfBirth?.toString() ??
+                          DateTime.now().toString()),
+                  infoCard(
+                      'Date Joined',
+                      _detailController.detail.value?.registerDate
+                              ?.toString() ??
+                          DateTime.now().toString()),
                   infoCard('Email', model!.email!),
                   infoCard(
                       'Address',
-                      formatLocation(
-                          _detailController.detail.value!.location!)),
+                      formatLocation(_detailController.detail.value?.location ??
+                          new Location())),
                 ],
-              )),
+              );
+            }
+
+            return HandleError(
+                _detailController.error.value, _detailController.getUserDetail);
+          }),
         ));
   }
 
@@ -73,15 +102,9 @@ class DetailScreen extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 15)),
         ),
-        _detailController.progress.value == LoadingEnum.loading
-            ? CircularProgressIndicator(color: black)
-            : _detailController.progress.value == LoadingEnum.done
-                ? Text(subtitle,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                        fontSize: 15))
-                : Text('failed to load'),
+        Text(subtitle,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 15)),
         SizedBox(height: 5),
         Divider(color: Colors.grey)
       ]),

@@ -21,7 +21,7 @@ dev_dependencies:
   json_serializable:  #model creation and factory method generation
   build_runner: ^2.0.6 #compliments the above package
   api_cache_manager: ^1.0.1 #caching
-
+  cached_network_image: ^3.1.0
 
 
 flutter:

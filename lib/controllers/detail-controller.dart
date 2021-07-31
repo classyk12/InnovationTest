@@ -9,6 +9,7 @@ class DetailController extends GetxController {
   var _userService = Get.put(UserService());
   var progress = LoadingEnum.loading.obs;
   var detail = new UserDetailModel().obs;
+  var error = ''.obs;
 
   @override
   void onInit() async {
@@ -23,12 +24,14 @@ class DetailController extends GetxController {
       if (response != null) {
         progress.value = LoadingEnum.done;
         detail.value = response;
+        print('completed');
       } else {
         progress.value = LoadingEnum.failed;
         print('failed');
       }
     } catch (err) {
       progress.value = LoadingEnum.failed;
+      error.value = err.toString();
       print('failed');
     }
   }

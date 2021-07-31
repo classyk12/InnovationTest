@@ -45,17 +45,14 @@ class DetailScreen extends StatelessWidget {
                             Icons.no_photography_outlined,
                             color: Colors.grey),
                       ),
-                      // FadeInImage.assetNetwork(
-                      //     placeholder: 'assets/images/me.jpg',
-                      //     image: model!.picture!,
-                      //     fit: BoxFit.cover),
                     )),
               ),
             ];
           },
           body: Obx(() {
             if (_detailController.progress.value == LoadingEnum.loading) {
-              return Center(child: CircularProgressIndicator.adaptive());
+              return Center(
+                  child: CircularProgressIndicator.adaptive(strokeWidth: 1));
             }
 
             if (_detailController.progress.value == LoadingEnum.done) {

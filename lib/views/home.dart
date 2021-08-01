@@ -57,9 +57,6 @@ class HomeScreen extends StatelessWidget {
                                 errorWidget: (context, url, error) =>
                                     Icon(Icons.error, color: Colors.red),
                               ),
-                              // FadeInImage.assetNetwork(
-                              //     placeholder: 'assets/images/me.jpg',
-                              //     image: _homeController.users[index].picture!),
                             ),
                           ),
                         ),

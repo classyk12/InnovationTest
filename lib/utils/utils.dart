@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intelligent_innovation/models/users.dart';
+import 'package:date_format/date_format.dart';
 
 Color white = Colors.white;
 Color black = Colors.black;
@@ -10,4 +11,8 @@ const String getUserEndpoint = 'user?limit=$limit';
 
 String formatLocation(Location location) {
   return "${location.street} ${location.city} ${location.state}, ${location.country}";
+}
+
+String getStringDate(DateTime date) {
+  return (formatDate(date, [dd, '-', M, '-', yyyy]));
 }

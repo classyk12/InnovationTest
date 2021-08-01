@@ -24,15 +24,12 @@ class DetailController extends GetxController {
       if (response != null) {
         progress.value = LoadingEnum.done;
         detail.value = response;
-        print('completed');
       } else {
         progress.value = LoadingEnum.failed;
-        print('failed');
       }
     } catch (err) {
       progress.value = LoadingEnum.failed;
       error.value = err.toString();
-      print('failed');
     }
   }
 }

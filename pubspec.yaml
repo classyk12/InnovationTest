@@ -20,8 +20,9 @@ dev_dependencies:
   get: 3.21.2 #handle states, routes and other utilities
   json_serializable:  #model creation and factory method generation
   build_runner: ^2.0.6 #compliments the above package
-  api_cache_manager: ^1.0.1 #caching
-  cached_network_image: ^3.1.0
+  api_cache_manager: ^1.0.1 #caching for api data
+  cached_network_image: ^3.1.0 #image caching
+  date_format: ^2.0.2 #date format
 
 
 flutter:

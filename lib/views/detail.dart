@@ -13,10 +13,10 @@ class DetailScreen extends StatelessWidget {
   final UserDetailModel? model;
 
   DetailScreen({Key? key, this.model}) : super(key: key);
-  final DetailController _detailController = Get.put(DetailController());
 
   @override
   Widget build(BuildContext context) {
+    final DetailController _detailController = Get.put(DetailController());
     _detailController.detail.value.id = model?.id;
     return Scaffold(
         backgroundColor: Colors.grey[50],
@@ -65,13 +65,12 @@ class DetailScreen extends StatelessWidget {
                       'Mobile', _detailController.detail.value?.phone ?? ''),
                   infoCard(
                       'Date of Birth',
-                      _detailController.detail.value?.dateOfBirth?.toString() ??
-                          DateTime.now().toString()),
+                      getStringDate(
+                          _detailController.detail.value.dateOfBirth!)),
                   infoCard(
                       'Date Joined',
-                      _detailController.detail.value?.registerDate
-                              ?.toString() ??
-                          DateTime.now().toString()),
+                      getStringDate(
+                          _detailController.detail.value.registerDate!)),
                   infoCard('Email', model!.email!),
                   infoCard(
                       'Address',

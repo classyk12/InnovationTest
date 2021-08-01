@@ -19,6 +19,7 @@ class DetailController extends GetxController {
 
   Future getUserDetail() async {
     try {
+      progress.value = LoadingEnum.loading;
       var response = await _userService.getUserById(detail.value!.id!);
 
       if (response != null) {
